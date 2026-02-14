@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Night ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* Stars */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {opacity: 0.3;}
+    to {opacity: 1;}
+}
+
+/* Main card */
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: writeName 3s forwards;
+}
+
+@keyframes writeName {
+    to {opacity: 1;}
+}
+
+p {
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+button {
+    background: white;
+    color: #0d1b2a;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ffd166;
+}
+
+/* Sparkle */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: gold;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Slideshow */
+.slideshow {
+    margin-top: 20px;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.slideshow img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: none;
+}
+
+.slideshow img.active {
+    display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Sarah ✨</h1>
+    <p>You light up my darkest nights...</p>
+    <p>Will you spend a magical evening with me?</p>
+    <button onclick="celebrate()">Click for Magic 💫</button>
+
+    <div class="slideshow">
+        <!-- Replace these with her pictures -->
+        <img src="photo1.jpg" class="active">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+    </div>
+</div>
+
+<audio id="music" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+// Generate stars
+for(let i=0;i<150;i++){
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.width=Math.random()*3+"px";
+    star.style.height=star.style.width;
+    star.style.top=Math.random()*100+"vh";
+    star.style.left=Math.random()*100+"vw";
+    document.body.appendChild(star);
+}
+
+// Sparkle explosion
+function celebrate(){
+    document.getElementById("music").play();
+    for(let i=0;i<80;i++){
+        let sparkle=document.createElement("div");
+        sparkle.className="sparkle";
+        sparkle.style.left=window.innerWidth/2+"px";
+        sparkle.style.top=window.innerHeight/2+"px";
+        document.body.appendChild(sparkle);
+
+        let angle=Math.random()*2*Math.PI;
+        let distance=Math.random()*200;
+
+        sparkle.animate([
+            {transform:'translate(0,0)', opacity:1},
+            {transform:`translate(${Math.cos(angle)*distance}px,${Math.sin(angle)*distance}px)`, opacity:0}
+        ],{
+            duration:1000
+        });
+
+        setTimeout(()=>sparkle.remove(),1000);
+    }
+}
+
+// Slideshow
+let slides=document.querySelectorAll(".slideshow img");
+let index=0;
+setInterval(()=>{
+    slides[index].classList.remove("active");
+    index=(index+1)%slides.length;
+    slides[index].classList.add("active");
+},3000);
+</script>
+
+</body>
+</html>
